@@ -185,3 +185,43 @@ func authWhoamI(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, response{Status: "ok", Data: id})
 }
+
+func authMe(c echo.Context) error {
+	id, err := getUserID(c)
+	if err != nil {
+		return ise(c, "getting user ID", err)
+	}
+
+	if id == -1 {
+		return c.JSON(http.StatusUnauthorized, response{Status: "error", Error: "Unauthorized"})
+	}
+
+	var username, fname, lname, addr1, addr2, city, state, zip string
+
+	err = db.QueryRow("SELECT username, fname, lname, addr1, addr2, city, state, zip FROM users WHERE id = ?", id).Scan(
+		&username,
+		&fname,
+		&lname,
+		&addr1,
+		&addr2,
+		&city,
+		&state,
+		&zip,
+	)
+	if err != nil {
+		return ise(c, "getting user details", err)
+	}
+
+	u := user{
+		ID:    id,
+		First: fname,
+		Last:  lname,
+		Addr1: addr1,
+		Addr2: addr2,
+		City:  city,
+		State: state,
+		Zip:   zip,
+	}
+
+	return c.JSON(http.StatusOK, response{Status: "ok", Data: u})
+}

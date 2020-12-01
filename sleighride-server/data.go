@@ -7,6 +7,7 @@ type response struct {
 }
 
 type user struct {
+	ID    int    `json:"id"`
 	First string `json:"first"`
 	Last  string `json:"last"`
 	Addr1 string `json:"addr1"`

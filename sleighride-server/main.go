@@ -39,6 +39,7 @@ func main() {
 	e.POST("/auth/login", authLogin)
 	e.POST("/auth/logout", authLogout)
 	e.GET("/auth/whoami", authWhoamI)
+	e.GET("/auth/me", authMe)
 
 	e.Logger.Fatal(e.Start(":4853"))
 }
