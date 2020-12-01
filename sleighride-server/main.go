@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -34,6 +35,10 @@ func main() {
 	e := echo.New()
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte(os.Getenv("secret")))))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{os.Getenv("cors")},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 
 	e.POST("/auth/register", authRegister)
 	e.POST("/auth/login", authLogin)

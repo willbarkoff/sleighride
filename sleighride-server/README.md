@@ -11,8 +11,9 @@ After that, create a `.env` file. This file stores the secrets for the applicati
 SECRET=randomstring
 DSN=sleighride:sleighride@tcp(localhost:3306)/sleighride
 SECRET_CODE=letmein
+CORS=*
 ```
 
-`SECRET` is the secret string used for signing cookies. This should be randomly generated and kept a secret! `DSN` is the data-source name. It should follow the format `user:password@host:port/database`. You can use `tcp` to force a connection with TCP. `SECRET_CODE` is the code that you can share with your friends to make sure that they're the correct people joining. **Don't mix up `SECRET` and `SECRET_CODE`!**.
+`SECRET` is the secret string used for signing cookies. This should be randomly generated and kept a secret! `DSN` is the data-source name. It should follow the format `user:password@host:port/database`. You can use `tcp` to force a connection with TCP. `SECRET_CODE` is the code that you can share with your friends to make sure that they're the correct people joining. **Don't mix up `SECRET` and `SECRET_CODE`!**. `CORS` is the list of allowed origins (though right now it only supports one).
 
 Next, install the application with `go install`, and run it with `sleighride-server`. I'd recommend setting up a `systemd` service to keep Sleighride running on the server, but I won't go into that here. There are numerous tutorials online.
