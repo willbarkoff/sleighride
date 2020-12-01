@@ -41,5 +41,10 @@ func main() {
 	e.GET("/auth/whoami", authWhoamI)
 	e.GET("/auth/me", authMe)
 
+	e.GET("/context", context)
+
+	e.POST("/admin/shuffle", adminShuffle)
+	e.GET("/admin/users", adminUsers)
+
 	e.Logger.Fatal(e.Start(":4853"))
 }

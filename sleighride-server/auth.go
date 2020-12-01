@@ -62,7 +62,7 @@ func authRegister(c echo.Context) error {
 
 	foundUserID := 0
 
-	foundUserErr := tx.QueryRow("SELECT id FROM users").Scan(&foundUserID)
+	foundUserErr := tx.QueryRow("SELECT id FROM users WHERE username = ?", strings.ToLower(c.FormValue("username"))).Scan(&foundUserID)
 	if foundUserErr == nil {
 		tx.Rollback()
 		return c.JSON(http.StatusConflict, response{Status: "error", Error: "A user with that username already exists"})
@@ -196,31 +196,9 @@ func authMe(c echo.Context) error {
 		return c.JSON(http.StatusUnauthorized, response{Status: "error", Error: "Unauthorized"})
 	}
 
-	var username, fname, lname, addr1, addr2, city, state, zip string
-
-	err = db.QueryRow("SELECT username, fname, lname, addr1, addr2, city, state, zip FROM users WHERE id = ?", id).Scan(
-		&username,
-		&fname,
-		&lname,
-		&addr1,
-		&addr2,
-		&city,
-		&state,
-		&zip,
-	)
+	u, err := getUserInfo(id)
 	if err != nil {
-		return ise(c, "getting user details", err)
-	}
-
-	u := user{
-		ID:    id,
-		First: fname,
-		Last:  lname,
-		Addr1: addr1,
-		Addr2: addr2,
-		City:  city,
-		State: state,
-		Zip:   zip,
+		return ise(c, "getting user info", err)
 	}
 
 	return c.JSON(http.StatusOK, response{Status: "ok", Data: u})

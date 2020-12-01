@@ -69,3 +69,45 @@ func getUserID(c echo.Context) (int, error) {
 	}
 	return id, nil
 }
+
+func getUserInfo(id int) (user, error) {
+	var username, fname, lname, addr1, addr2, city, state, zip string
+
+	err := db.QueryRow("SELECT username, fname, lname, addr1, addr2, city, state, zip FROM users WHERE id = ?", id).Scan(
+		&username,
+		&fname,
+		&lname,
+		&addr1,
+		&addr2,
+		&city,
+		&state,
+		&zip,
+	)
+	if err != nil {
+		return user{}, err
+	}
+
+	u := user{
+		ID:    id,
+		First: fname,
+		Last:  lname,
+		Addr1: addr1,
+		Addr2: addr2,
+		City:  city,
+		State: state,
+		Zip:   zip,
+	}
+	return u, nil
+}
+
+func isManager(id int) bool {
+	isManagerInt := 0
+	db.QueryRow("SELECT isManager FROM users WHERE id = ?", id).Scan(&isManagerInt)
+	return isManagerInt != 0
+}
+
+func getAssignedUser(id int) int {
+	assignedUserID := -1
+	db.QueryRow("SELECT assignedUser FROM users WHERE id = ?", id).Scan(&assignedUserID)
+	return assignedUserID
+}

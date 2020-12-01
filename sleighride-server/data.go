@@ -21,3 +21,10 @@ type message struct {
 	ID      string `json:"id"`
 	Content string `json:"content"`
 }
+
+type contextData struct {
+	User user `json:"user"`
+	// AssignedUser user `json:"assignedUser,omitempty"`
+	AssignedUser user `json:"assignedUser"`
+	IsManager    bool `json:"isManager"`
+}
