@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
@@ -10,8 +12,12 @@ import (
 )
 
 func authRegister(c echo.Context) error {
-	if !checkForm(c, "username", "fname", "lname", "password", "addr1", "city", "state", "zip") {
+	if !checkForm(c, "username", "fname", "lname", "password", "secretCode", "addr1", "city", "state", "zip") {
 		return c.JSON(http.StatusBadRequest, response{Status: "error", Error: "Required parameters were missing from the request"})
+	}
+
+	if strings.ToLower(c.FormValue("secretCode")) != os.Getenv("SECRET_CODE") {
+		return c.JSON(http.StatusUnauthorized, response{Status: "error", Error: "Incorrect secret code"})
 	}
 
 	if len(c.FormValue("state")) != 2 {
@@ -68,7 +74,7 @@ func authRegister(c echo.Context) error {
 	}
 
 	_, err = tx.Exec("INSERT INTO users (username, fname, lname, password, addr1, addr2, city, state, zip, isManager) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		c.FormValue("username"),
+		strings.ToLower(c.FormValue("username")),
 		c.FormValue("fname"),
 		c.FormValue("lname"),
 		hash,
@@ -124,7 +130,7 @@ func authLogin(c echo.Context) error {
 	var hashedPassword string
 	id := 0
 
-	userNotFound := db.QueryRow("SELECT id, password FROM users WHERE username = ?", c.FormValue("username")).Scan(&id, &hashedPassword)
+	userNotFound := db.QueryRow("SELECT id, password FROM users WHERE username = ?", strings.ToLower(c.FormValue("username"))).Scan(&id, &hashedPassword)
 	if userNotFound != nil {
 		return c.JSON(http.StatusUnauthorized, response{Status: "error", Error: "User not found"})
 	}
