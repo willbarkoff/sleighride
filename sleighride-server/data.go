@@ -1,5 +1,12 @@
 package main
 
+import (
+	"net/http"
+
+	"github.com/labstack/echo/v4"
+	"github.com/wilhelmguo/golang-to-typescript/typescriptify"
+)
+
 type response struct {
 	Status string      `json:"status"`
 	Error  string      `json:"error,omitempty"`
@@ -27,4 +34,27 @@ type contextData struct {
 	// AssignedUser user `json:"assignedUser,omitempty"`
 	AssignedUser user `json:"assignedUser"`
 	IsManager    bool `json:"isManager"`
+}
+
+func dataTypings(c echo.Context) error {
+	converter := typescriptify.New()
+
+	converter.Indent = "\t"
+	converter.UseInterface = true
+	converter.CreateConstructor = false
+	converter.Prefix = "SleighrideAPI_"
+
+	converter.Add(response{})
+	converter.Add(user{})
+	converter.Add(message{})
+	converter.Add(contextData{})
+
+	typings, err := converter.Convert(nil)
+
+	typings = "//This only kinda works, use with caution!\n\n" + typings
+
+	if err != nil {
+		return ise(c, "generating typings", err)
+	}
+	return c.String(http.StatusOK, typings)
 }

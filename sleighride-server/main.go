@@ -51,5 +51,7 @@ func main() {
 	e.POST("/admin/shuffle", adminShuffle)
 	e.GET("/admin/users", adminUsers)
 
+	e.GET("/data/typings", dataTypings)
+
 	e.Logger.Fatal(e.Start(":4853"))
 }
