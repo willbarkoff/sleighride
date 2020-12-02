@@ -8,7 +8,7 @@ export default function ManagerUtilities(): JSX.Element {
 	const [error, setError] = React.useState("");
 
 	const shuffle = async () => {
-		if (!confirm("Are you sure you'd like to shuffle assignemnts? This cannot be undone.")) {
+		if (!confirm("Are you sure you'd like to shuffle assignments? This cannot be undone.")) {
 			return;
 		}
 		setIsShuffling(true);
@@ -22,7 +22,7 @@ export default function ManagerUtilities(): JSX.Element {
 
 	return <>
 		<div className="container">
-			<h3 className="is-size-4">Manager Utilities</h3>
+			<h3 className="is-size-4">Organizer Utilities</h3>
 			<div className="columns">
 				<div className="column">
 					<h4 className="is-size-5">List participants</h4>

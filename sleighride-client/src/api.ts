@@ -1,6 +1,6 @@
 export const baseurl = process.env.API_BASEURL || "http://localhost:4853";
 
-const formURLEncode = function(body: Record<string, string>): string {
+const formURLEncode = function (body: Record<string, string>): string {
 	if (!body) {
 		return "";
 	}
@@ -75,4 +75,15 @@ export interface SleighrideAPI_contextData {
 	user: SleighrideAPI_user;
 	assignedUser: SleighrideAPI_user;
 	isManager: boolean;
+}
+
+export interface SleighrideAPI_note {
+	isSender: boolean;
+	content: string;
+	datetime: string;
+}
+
+export interface SleighrideAPI_notesData {
+	santaConversation: SleighrideAPI_note[];
+	recipientConversation: SleighrideAPI_note[];
 }

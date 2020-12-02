@@ -10,6 +10,7 @@ $family-sans-serif: "Cabin", sans-serif;
 $primary: findDarkColor($red);
 $tabs-link-active-color: $primary;
 $tabs-link-active-border-bottom-color: $tabs-link-active-color;
+$menu-item-active-background-color: $primary;
 
 #app {
 	min-height: 100vh;

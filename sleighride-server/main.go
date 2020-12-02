@@ -53,5 +53,8 @@ func main() {
 
 	e.GET("/data/typings", dataTypings)
 
+	e.POST("/notes/send", notesSend)
+	e.GET("/notes/get", notesGet)
+
 	e.Logger.Fatal(e.Start(":4853"))
 }

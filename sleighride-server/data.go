@@ -30,10 +30,20 @@ type message struct {
 }
 
 type contextData struct {
-	User user `json:"user"`
-	// AssignedUser user `json:"assignedUser,omitempty"`
+	User         user `json:"user"`
 	AssignedUser user `json:"assignedUser"`
 	IsManager    bool `json:"isManager"`
+}
+
+type note struct {
+	IsSender bool   `json:"isSender"`
+	Content  string `json:"content"`
+	DateTime string `json:"datetime"`
+}
+
+type notesData struct {
+	SantaConversation     []note `json:"santaConversation"`
+	RecipientConversation []note `json:"recipientConversation"`
 }
 
 func dataTypings(c echo.Context) error {
@@ -48,6 +58,8 @@ func dataTypings(c echo.Context) error {
 	converter.Add(user{})
 	converter.Add(message{})
 	converter.Add(contextData{})
+	converter.Add(notesData{})
+	converter.Add(note{})
 
 	typings, err := converter.Convert(nil)
 
