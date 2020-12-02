@@ -16,6 +16,8 @@ func adminUsers(c echo.Context) error {
 		return ise(c, "Getting users", err)
 	}
 
+	defer rows.Close()
+
 	for rows.Next() {
 		var id int
 		var username, fname, lname, addr1, addr2, city, state, zip string
