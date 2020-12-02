@@ -36,8 +36,9 @@ func main() {
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte(os.Getenv("secret")))))
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{os.Getenv("CORS")},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+		AllowOrigins:     []string{os.Getenv("CORS")},
+		AllowCredentials: true,
+		AllowHeaders:     []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
 	e.POST("/auth/register", authRegister)
