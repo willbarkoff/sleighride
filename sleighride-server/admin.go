@@ -76,6 +76,10 @@ func adminShuffle(c echo.Context) error {
 		return ise(c, "getting number of users", err)
 	}
 
+	if numUsers < 2 {
+		return c.JSON(http.StatusBadRequest, response{Status: "Error", Error: "Impossible to generate pairings due to few users."})
+	}
+
 	a := createRange(1, numUsers)
 
 	for somebodyHasThemself(a) {

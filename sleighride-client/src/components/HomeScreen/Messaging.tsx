@@ -25,7 +25,7 @@ export default function Messaging(): JSX.Element {
 		}
 	};
 
-	if (!loading && !notes) {
+	if (!loading && !notes && !error) {
 		getMessages();
 	}
 

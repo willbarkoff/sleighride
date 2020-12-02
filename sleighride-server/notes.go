@@ -57,6 +57,10 @@ func notesGet(c echo.Context) error {
 		return ise(c, "getting recipient", err)
 	}
 
+	if recipientID == -1 {
+		return c.JSON(http.StatusBadRequest, response{Status: "Error", Error: "Giftee has not been assigned yet."})
+	}
+
 	santaConv := []note{}
 	recipConv := []note{}
 
