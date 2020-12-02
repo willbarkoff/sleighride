@@ -36,7 +36,7 @@ func main() {
 
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte(os.Getenv("secret")))))
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{os.Getenv("cors")},
+		AllowOrigins: []string{os.Getenv("CORS")},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
