@@ -42,7 +42,7 @@ export default function Textbox(props: textboxProps): JSX.Element {
 			<div className="modal-background"></div>
 			<div className="modal-content">
 				{/* @ts-expect-error because typings are incorret */}
-				<Picker emoji=":smile:" title="Pick an emoji" autoFocus onSelect={(emoji) => { setShowEmojiPicker(false); setMessage(message + emoji.native); }} style={{ width: "auto" }} />
+				<Picker emoji=":sled:" title="Pick an emoji" autoFocus onSelect={(emoji) => { setShowEmojiPicker(false); setMessage(message + emoji.native); }} style={{ width: "100%" }} />
 			</div>
 			<button className="modal-close is-large" onClick={() => setShowEmojiPicker(false)} aria-label="close"></button>
 		</div>
