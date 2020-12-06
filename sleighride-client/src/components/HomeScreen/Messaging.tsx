@@ -36,13 +36,13 @@ export default function Messaging(): JSX.Element {
 
 	return <>
 		<p className="py-2">
-			Write back and forth between your giftee or your Santa! Note that as of right now, messaging is asynchronious, meaning that you won't be notified
+			Write back and forth between your giftee or your gift giver! Note that as of right now, messaging is asynchronious, meaning that you won't be notified
 			of new messages, and you will need to refresh the page to see them. I hope to add email/push notifications soon!
 		</p>
 		<div className="columns">
 			<aside className="menu column is-one-fifth">
 				<ul className="menu-list">
-					<li><a className={toSanta ? "is-active" : ""} onClick={() => setToSanta(true)}>To my Santa</a></li>
+					<li><a className={toSanta ? "is-active" : ""} onClick={() => setToSanta(true)}>To my gift giver</a></li>
 					<li><a className={!toSanta ? "is-active" : ""} onClick={() => setToSanta(false)}>To {context.assignedUser.first}</a></li>
 				</ul>
 			</aside>

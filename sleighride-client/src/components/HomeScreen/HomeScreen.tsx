@@ -37,7 +37,7 @@ export default function HomeScreen(): JSX.Element {
 		{context.isManager && <ManagerUtilities />}
 		<div className="container">
 			<h3 className="is-size-4">Messaging</h3>
-			{context.assignedUser.id < 1 ? <p className="py-2">Messaging will be available once secret santas are assigned. Contact your organizer for more infomation.</p> : <Messaging />}
+			{context.assignedUser.id < 1 ? <p className="py-2">Messaging will be available once gift givers are assigned. Contact your organizer for more infomation.</p> : <Messaging />}
 		</div>
 	</section>;
 }
