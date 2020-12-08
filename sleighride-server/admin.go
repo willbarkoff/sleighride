@@ -70,7 +70,7 @@ func adminShuffle(c echo.Context) error {
 	}
 
 	numUsers := 0
-	err = tx.QueryRow("SELECT COUNT(*) from USERS").Scan(&numUsers)
+	err = tx.QueryRow("SELECT COUNT(*) from users").Scan(&numUsers)
 
 	if err != nil {
 		return ise(c, "getting number of users", err)
